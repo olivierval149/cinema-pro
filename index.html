@@ -227,13 +227,11 @@
 
     <h1>🎬 Cinéma Studio</h1>
 
-    <!-- 1. Clé API -->
     <div class="section">
         <div class="section-title">Configuration</div>
-        <input type="password" id="apiKey" placeholder="Clé API vidéo / voice">
+        <input type="password" id="apiKey" placeholder="Clé API vidéo / voice" oninput="saveApiKey(this.value)">
     </div>
 
-    <!-- 2. Mode & Voix -->
     <div class="section">
         <div class="toggle-container">
             <span class="section-title" style="margin:0;">Mode</span>
@@ -258,14 +256,12 @@
         </select>
     </div>
 
-    <!-- 3. Prompts & Scénario -->
     <div class="section">
         <div class="section-title">Texte & Scénario</div>
         <textarea id="promptInput" placeholder="Description du visuel (Prompt)..."></textarea>
         <textarea id="scriptInput" placeholder="Texte de la voix off / Scénario..."></textarea>
     </div>
 
-    <!-- 4. Effets Sonores (12 Triggers) -->
     <div class="section">
         <div class="section-title">Effets Sonores (12)</div>
         <div class="fx-grid">
@@ -284,7 +280,6 @@
         </div>
     </div>
 
-    <!-- 5. Images -->
     <div class="section">
         <div class="section-title">Galerie d'images</div>
         <label for="imageUpload" class="upload-label">➕ Ajouter une ou plusieurs images</label>
@@ -292,7 +287,6 @@
         <div class="gallery" id="imageGallery"></div>
     </div>
 
-    <!-- 6. Durée -->
     <div class="section">
         <div class="section-title">Durée de la vidéo</div>
         <div class="duration-selector">
@@ -302,12 +296,22 @@
         </div>
     </div>
 
-    <!-- Bouton Générer -->
     <button class="generate-btn" onclick="generateVideo()">🚀 GÉNÉRER LA VIDÉO</button>
 
     <script>
         let selectedDuration = 5;
         let selectedMode = 'auto';
+
+        window.onload = function() {
+            const savedKey = localStorage.getItem('cinema_api_key');
+            if (savedKey) {
+                document.getElementById('apiKey').value = savedKey;
+            }
+        };
+
+        function saveApiKey(key) {
+            localStorage.setItem('cinema_api_key', key);
+        }
 
         function setMode(mode) {
             selectedMode = mode;
